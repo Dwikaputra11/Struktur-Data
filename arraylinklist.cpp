@@ -19,8 +19,8 @@ void create();
 void checkEmpty();
 void display();
 
-int main()
-{
+int main(){
+
 	int num,t,pilih;
 	char loop;
 	string name;
