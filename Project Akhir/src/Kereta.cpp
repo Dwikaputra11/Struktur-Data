@@ -1,27 +1,29 @@
 #include "Kereta.h"
+#include <iostream>
+#include <string>
 
 void create(Kereta *train){
 	// intinya ngasik value awal aja
     train = (Kereta*)malloc(sizeof(Kereta));
     for(int i = 0; i < bound; i++){
-        (train + i)->no_penumpang = 0; // ini aku gak tau aksesnya gmn
-        (train + i)->next = 0;
+        train->no_penumpang = 0; // ini aku gak tau aksesnya gmn
+        train->next = 0;
     }
 };
-void input(Kereta *train,string name,int num){
-	(train + num)->nama = name;
-	(train + num)->no_penumpang = num;
+void input(Kereta *train,char* name,int num){
+	train->nama = name;
+	train->no_penumpang = num;
 
 	if(firstValue == 0){
-		(train + num)->next = 0;
+		train->next = 0;
 		firstValue = num;
 	}else{
 		temp = firstValue;
-		while((train + temp)->next != 0){
-			temp = (train + temp)->next;
+		while(train->next != 0){
+			temp = train->next;
 		}
-		(train + temp)->next = num;
-		(train + num)->next = 0;
+		train->next = num;
+		train->next = 0;
 	}
 	lastValue = num;
 	checkEmpty(train);
@@ -38,7 +40,7 @@ void checkEmpty(Kereta *train){
 	// 	cout << pos[i].next << " ";
 	// }
 	for(int i = 0; i < bound; i++){
-		if((train + i)->no_penumpang == 0){
+		if(train->no_penumpang == 0){
 			if(temp == -1){
 				firstEmpty = i;
 				temp = i;
@@ -55,16 +57,16 @@ void display(Kereta *train){
     temp = firstValue;
     cout << "\nSeat yang telah di booking : \n";
     while((train + temp)->next != 0){
-        cout << "Seat nomor " << (train + temp)->no_penumpang << " atas nama " << (train + temp)->nama << "\n";
-        temp = (train + temp)->next;
-    }
-    cout << "Seat nomor " << (train + lastValue)->no_penumpang << " atas nama " << (train + lastValue)->nama << "\n\n";
+        cout << "Seat nomor " << train->no_penumpang << " atas nama " << train->nama << "\n";
+        temp = train->next;
+	}
+    cout << "Seat nomor " << train->no_penumpang << " atas nama " << train->nama << "\n\n";
 
     cout << "Seat Kosong : ";
     temp = firstEmpty;
-    while((train + temp)->next != 0){
-        cout << (train + temp)->next << " ";
-        temp = (train + temp)->next;
+    while(train->next != 0){
+        cout << train->next << " ";
+        temp = train->next;
     }
     cout << lastEmpty << "\n\n";
 }
