@@ -3,8 +3,11 @@
 
 #include <iostream>
 #include <string>
+#include <malloc.h>
 using namespace std;
+int firstValue = 0,lastValue = 0,firstEmpty = 0,lastEmpty = 0,countEmpty = 0;
 extern int bound;
+extern int temp;
 
 struct Kereta
 {

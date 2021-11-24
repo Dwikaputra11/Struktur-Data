@@ -9,7 +9,7 @@ using namespace std;
 int main(int argc, char const *argv[])
 {
     Kereta *train;
-    create(&train);
+    create(train);
 
     string nama;
     int pos;

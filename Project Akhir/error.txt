@@ -1,0 +1,14 @@
+> Executing task: g++ -std=c++17 ./src/**.cpp -o ./bin/App.exe <
+
+c:/mingw/bin/../lib/gcc/mingw32/9.2.0/../../../../mingw32/bin/ld.exe: C:\Users\deny\AppData\Local\Temp\ccUG0uog.o:Main.cpp:(.text+0x0): multiple definition of `create(Kereta*)'; C:\Users\deny\AppData\Local\Temp\ccQEWKQw.o:Kereta.cpp:(.text+0x0): first defined here
+c:/mingw/bin/../lib/gcc/mingw32/9.2.0/../../../../mingw32/bin/ld.exe: C:\Users\deny\AppData\Local\Temp\ccUG0uog.o:Main.cpp:(.text+0x57): multiple 
+definition of `input(Kereta*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, int)'; C:\Users\deny\AppData\Local\Temp\ccQEWKQw.o:Kereta.cpp:(.text+0x57): first defined here
+c:/mingw/bin/../lib/gcc/mingw32/9.2.0/../../../../mingw32/bin/ld.exe: C:\Users\deny\AppData\Local\Temp\ccUG0uog.o:Main.cpp:(.text+0x12e): multiple definition of `checkEmpty(Kereta*)'; C:\Users\deny\AppData\Local\Temp\ccQEWKQw.o:Kereta.cpp:(.text+0x12e): first defined here
+c:/mingw/bin/../lib/gcc/mingw32/9.2.0/../../../../mingw32/bin/ld.exe: C:\Users\deny\AppData\Local\Temp\ccUG0uog.o:Main.cpp:(.text+0x1c9): multiple definition of `display(Kereta*)'; C:\Users\deny\AppData\Local\Temp\ccQEWKQw.o:Kereta.cpp:(.text+0x1c9): first defined here
+c:/mingw/bin/../lib/gcc/mingw32/9.2.0/../../../../mingw32/bin/ld.exe: C:\Users\deny\AppData\Local\Temp\ccUG0uog.o:Main.cpp:(.bss+0x0): multiple definition of `firstValue'; C:\Users\deny\AppData\Local\Temp\ccQEWKQw.o:Kereta.cpp:(.bss+0x0): first defined here
+c:/mingw/bin/../lib/gcc/mingw32/9.2.0/../../../../mingw32/bin/ld.exe: C:\Users\deny\AppData\Local\Temp\ccUG0uog.o:Main.cpp:(.bss+0x4): multiple definition of `lastValue'; C:\Users\deny\AppData\Local\Temp\ccQEWKQw.o:Kereta.cpp:(.bss+0x4): first defined here
+c:/mingw/bin/../lib/gcc/mingw32/9.2.0/../../../../mingw32/bin/ld.exe: C:\Users\deny\AppData\Local\Temp\ccUG0uog.o:Main.cpp:(.bss+0x8): multiple definition of `firstEmpty'; C:\Users\deny\AppData\Local\Temp\ccQEWKQw.o:Kereta.cpp:(.bss+0x8): first defined here
+c:/mingw/bin/../lib/gcc/mingw32/9.2.0/../../../../mingw32/bin/ld.exe: C:\Users\deny\AppData\Local\Temp\ccUG0uog.o:Main.cpp:(.bss+0xc): multiple definition of `lastEmpty'; C:\Users\deny\AppData\Local\Temp\ccQEWKQw.o:Kereta.cpp:(.bss+0xc): first defined here
+c:/mingw/bin/../lib/gcc/mingw32/9.2.0/../../../../mingw32/bin/ld.exe: C:\Users\deny\AppData\Local\Temp\ccUG0uog.o:Main.cpp:(.bss+0x10): multiple definition of `countEmpty'; C:\Users\deny\AppData\Local\Temp\ccQEWKQw.o:Kereta.cpp:(.bss+0x10): first defined here
+collect2.exe: error: ld returned 1 exit status
+The terminal process "C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -Command g++ -std=c++17 ./src/**.cpp -o ./bin/App.exe" terminated with exit code: 1.
