@@ -74,7 +74,7 @@ void display(){
 	temp = head->next;
 
 	while(temp != head){
-		if(cout << temp->info << " ";
+		cout << temp->info << " ";
 		temp = temp->next;
 	}
 	enter;
