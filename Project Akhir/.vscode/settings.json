@@ -3,7 +3,9 @@
     "iostream": "cpp",
     "fstream": "cpp",
     "regex": "cpp",
-    "ratio": "cpp"
+    "ratio": "cpp",
+    "ostream": "cpp",
+    "iosfwd": "cpp"
   },
   "C_Cpp.errorSquiggles": "Disabled"
 }

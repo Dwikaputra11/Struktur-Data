@@ -4,10 +4,13 @@
 #include <iostream>
 #include <string>
 #include <malloc.h>
+#include <fstream>
+#include <limits>
 using namespace std;
 extern int bound;
 extern int countEmpty,countValue;
-// typedef struct Kereta *typeptr;
+extern string nameFileBooking;
+extern string nameFileEmptySeat;
 struct Kereta
 {
     string nama;
@@ -18,10 +21,19 @@ struct Kereta
 extern Kereta *firstValue, *firstEmpty, *lastValue, *lastEmpty;
 
 // typeptr first,last;
-
+void create();
 void input(string,int);
 void display();
 void clear(char*);
 void checkEmpty();
+
+// write and read from file
+void writeFileBooking(string[],int[],int);
+void readFileBooking();
+void writeEmptySeat(string[],int[],int);
+void readEmptySeat();
+void updateFileBooking(); 
+void updateEmptySeat();
+void removeFromBooking(int);
 
 #endif
