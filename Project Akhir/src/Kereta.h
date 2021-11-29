@@ -6,22 +6,22 @@
 #include <malloc.h>
 using namespace std;
 extern int bound;
-extern int temp;
-extern int firstValue,firstEmpty,lastValue,lastEmpty,countEmpty;
-
+extern int countEmpty,countValue;
+// typedef struct Kereta *typeptr;
 struct Kereta
 {
-    char nama[50];
+    string nama;
     int no_penumpang;
-    int next;
-    int kosong[100];
+    Kereta *next;
+    int kosong;
 };
+extern Kereta *firstValue, *firstEmpty, *lastValue, *lastEmpty;
 
-// TODO: masih error disini
-void create(Kereta *train);
-void input(Kereta *train,char*,int);
-void display(Kereta *train);
-void clear(Kereta *train,char*);
-void checkEmpty(Kereta *train);
+// typeptr first,last;
+
+void input(string,int);
+void display();
+void clear(char*);
+void checkEmpty();
 
 #endif
