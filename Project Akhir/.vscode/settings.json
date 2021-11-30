@@ -5,7 +5,11 @@
     "regex": "cpp",
     "ratio": "cpp",
     "ostream": "cpp",
-    "iosfwd": "cpp"
+    "iosfwd": "cpp",
+    "array": "cpp",
+    "*.tcc": "cpp",
+    "bitset": "cpp",
+    "new": "cpp"
   },
   "C_Cpp.errorSquiggles": "Disabled"
 }

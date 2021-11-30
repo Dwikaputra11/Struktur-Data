@@ -9,8 +9,8 @@
 using namespace std;
 extern int bound;
 extern int countEmpty,countValue;
-extern string nameFileBooking;
-extern string nameFileEmptySeat;
+extern string trainBooking;
+extern string trainEmptySeat;
 struct Kereta
 {
     string nama;
@@ -18,22 +18,22 @@ struct Kereta
     Kereta *next;
     int kosong;
 };
-extern Kereta *firstValue, *firstEmpty, *lastValue, *lastEmpty;
+extern Kereta *trainFirstValue,*trainLastValue,*trainFirstEmpty,*trainLastEmpty;
 
 // typeptr first,last;
-void create();
-void input(string,int);
-void display();
-void clear(char*);
-void checkEmpty();
+void creatTrain();
+void inputTrain(string,int);
+void displayTrain();
+void checkEmptyTrain();
+bool isBookedTrain(int);
 
 // write and read from file
-void writeFileBooking(string[],int[],int);
-void readFileBooking();
-void writeEmptySeat(string[],int[],int);
-void readEmptySeat();
-void updateFileBooking(); 
-void updateEmptySeat();
-void removeFromBooking(int);
+void writeFileBookingTrain(string[],int[],int);
+void readFileBookingTrain();
+void writeEmptySeatTrain(string[],int[],int);
+void readEmptySeatTrain();
+void updateFileBookingTrain(int,int); 
+void updateEmptySeatTrain();
+void removeFromBookingTrain(int);
 
 #endif
