@@ -1,9 +1,8 @@
 #include "Kereta.h"
 
-void createTrain(){
-	cout << "Masuk Create Linklist\n";
+void createTrain(){ // membuat linklist struct Kereta
+	// cout << "Masuk Create Linklist\n";
 	// intinya ngasik value awal aja
-    // train = new Kereta;//(Kereta*)malloc(sizeof(Kereta));
 	trainFirstValue = new Kereta; 
 	trainLastValue = new Kereta;
 	trainFirstEmpty = new Kereta;
@@ -14,13 +13,11 @@ void createTrain(){
 	trainFirstEmpty = NULL;
 };
 
-void inputTrain(string name,int num){ // stack
-	cout << "Masuk Input\n";
+void inputTrain(string name,int num){ // Dimasukan ke File dengan metode Stack;
 	Kereta *train;
 	train = new Kereta;
 	train->nama = name;
 	train->no_penumpang = num;
-	cout << train->nama << " " << train->no_penumpang << endl;
 
 	if(trainFirstValue == NULL){
 		trainFirstValue = train;
@@ -32,9 +29,8 @@ void inputTrain(string name,int num){ // stack
 	}
 	countValue++;
 }
-void checkEmptyTrain(){
+void checkEmptyTrain(){ // Mengecek seat kosong dari pemesanan seat
 	countEmpty = 0;
-	cout << "Masuk Check Empty\n";
     Kereta *temp,*empty;
 	for(int i = 1; i <= bound; i++){
 		temp = trainFirstValue;
@@ -57,29 +53,88 @@ void checkEmptyTrain(){
 		}
 	}
 }
-void displayTrain(){
-	// checkEmpty();
-	Kereta *temp;
-    temp = trainFirstValue;
-	int count = 0;
+void displayTrain(){ // Ditampilakn dengan metode queue
+	int count = 1;
     cout << "\nSeat yang telah di booking : \n";
 	cout << "Jumlah Booking : " << countValue << endl;
-    while(temp != NULL && count != 5){
-        cout << "Seat nomor " << temp->no_penumpang << " atas nama " << temp->nama << "\n";
-        temp = temp->next;
-		count++;
+	int x = 4; // jarak enter untuk mengerluarkan "-"
+	int y = 2; // jarak enter untuk mengeluarkan nomor atau karakter
+	
+	for(int i = 0; i < 25; i++){
+		int p = 9; // jarak spasi untuk memunculkan "|"
+        if(i == x){
+            for(int j = 0; j < 39; j++){
+                if(j >= 18 && j <= 21){
+                    cout << " ";
+                }else{
+                    cout << "-";
+                }
+            }
+            cout << endl;
+            x+=4;
+        }else if(i == y){
+            int r = 5; // jarak spasi untuk memunculkan nomor
+			y = y + 4;
+            for(int j = 1; j < 39; j++ ){
+                if(j == p){
+                    cout << "|";
+                    if(p == 18){
+                        p += 13;
+                    }else{
+                        p += 9;
+                    }
+                }else 
+                if(j == r){
+					Kereta *tempValue,*tempEmpty;
+					tempEmpty = trainFirstEmpty;
+					tempValue = trainFirstValue;
+					while(tempValue -> no_penumpang != count && tempValue -> next != NULL){
+						tempValue = tempValue->next;
+					}
+                    if(tempValue -> next == NULL && tempValue -> no_penumpang != count){
+						cout << "X";	
+					}else{
+						cout << "O";
+					}
+					count++;
+                    if(r == 14){
+                        r += 13;
+                    }else{
+                        r = r + 9;
+                    }	
+                }else if(j == 22){
+                    cout << "|";
+                }else {
+                    cout << " ";// spasi pada baris yang muncul angka
+                }
+            }
+            cout << endl;
+        }else{
+            int num = 0;
+            for(int j = 1; j < 39; j++ ){
+                if(j == p){
+                    cout << "|";
+                    if(p == 18){
+                        p += 13;
+                    }else{
+                        p = p + 9;
+                    }
+                }else if(j == 22){
+                    cout << "|";
+                }else{
+                    cout << " ";
+                }	
+            }
+            cout << endl;
+        }	
 	}
 
-    cout << "\nSeat Kosong : \n";
-	cout << "Jumlah Seat Kosong : " << countEmpty << endl;
-    temp = trainFirstEmpty;
-    while(temp != NULL){
-        cout << temp->kosong << " ";
-        temp = temp->next;
-    }
+	cout << "\n\nKeterangan\n";
+	cout << "O : Telah dibooking\n";
+	cout << "X : Belum dibooking\n";
 }
 
-bool isBookedTrain(int no){
+bool isBookedTrain(int no){ // mengecek apakah seat sudah dibooking
 	readFileBookingTrain();
 	bool status = false;
 	Kereta *temp;
@@ -99,16 +154,16 @@ bool isBookedTrain(int no){
 /* ============ FILE SECTION ============ */
 
 /* READ & WRITE FILE BOOKING */
-void writeFileBookingTrain(string nama[],int pos[],int n){
+void writeFileBookingTrain(string nama[],int pos[],int n){ // menulis data ke File
 	createTrain();
 	countValue = 0;
 	for(int i = 0; i < n; i++){
-		cout << nama[i] << " " << pos[i] << endl;
+		// cout << nama[i] << " " << pos[i] << endl;
 		inputTrain(nama[i],pos[i]);
 	}
 	Kereta *temp;
 	ofstream myFile;
-	myFile.open(trainBooking,ios::trunc);
+	myFile.open(trainBooking,ios::app);
 	temp = trainFirstValue;
 	while(temp != NULL){
 		myFile << temp->nama << endl;
@@ -118,7 +173,8 @@ void writeFileBookingTrain(string nama[],int pos[],int n){
 	myFile.close();
 	writeEmptySeatTrain(nama,pos,n);
 }
-void readFileBookingTrain(){
+void readFileBookingTrain(){ // membaca data dari File
+	countValue = 0;
 	createTrain();
 	ifstream myFile;
 	string nama;
@@ -131,10 +187,8 @@ void readFileBookingTrain(){
 			train->nama = nama;
 			myFile >> no; 
 			train->no_penumpang = no;
-			// cout << "nama : " << nama << " no : " << no << endl;
 
 			if(trainFirstValue == NULL){
-				// cout << "First Value NULL\n";
 				trainFirstValue = train; 
 				trainLastValue = train;
 				trainLastValue->next = NULL;
@@ -143,20 +197,19 @@ void readFileBookingTrain(){
 				trainLastValue = train;
 				trainLastValue->next = NULL;
 			}
+			countValue++;
 			myFile.ignore(numeric_limits<streamsize>::max(),'\n');
 		}
 	}
 	myFile.close();
-	// readEmptySeat();
 }
 /* END OF READ & WRITE FILE BOOKING */
 
 /* READ & WRITE FILE EMPTY SEAT */
-void writeEmptySeatTrain(string nama[],int pos[],int n){ // queue
+void writeEmptySeatTrain(string nama[],int pos[],int n){ // Ditulis dengan Metode Queue
 	createTrain();
 	countValue = 0;
 	for(int i = 0; i < n; i++){
-		cout << nama[i] << " " << pos[i] << endl;
 		inputTrain(nama[i],pos[i]);
 	}
 	checkEmptyTrain(); 
@@ -170,8 +223,7 @@ void writeEmptySeatTrain(string nama[],int pos[],int n){ // queue
 	}
 	myFile.close();
 }
-void readEmptySeatTrain(){
-	createTrain();
+void readEmptySeatTrain(){ // Membaca file seat kosong
 	ifstream myFile;
 	int no;
 	myFile.open(trainEmptySeat);
@@ -180,10 +232,8 @@ void readEmptySeatTrain(){
 			Kereta *train;
 			train = new Kereta;
 			train->kosong = no;
-			// cout << " no : " << no << endl;
 
 			if(trainFirstEmpty == NULL){
-				// cout << "First Value NULL\n";
 				trainFirstEmpty = train; 
 				trainLastEmpty = train;
 				trainLastEmpty->next = NULL;
@@ -200,11 +250,9 @@ void readEmptySeatTrain(){
 /* END OF READ & WRITE FILE EMPTY SEAT */
 
 /* DELETE FILE BOOKING */
-void removeFromBookingTrain(int no){
-	readFileBookingTrain();
-	cout << "Masuk Remove\n";
+void removeFromBookingTrain(int no){ // membatalkan pemesanan
+	readFileBookingTrain(); // membaca file dimasukkan ke linklist
 	bool isBook = true;
-	cout << "isBook " << isBook << endl;
 	Kereta *hapus,*temp;
 	hapus = new Kereta;
 	if(trainFirstValue->no_penumpang == no){
@@ -230,7 +278,6 @@ void removeFromBookingTrain(int no){
 
 	if(isBook){
 		countValue--; 
-		cout << "\nADA\n";
 		free(hapus);
 		// update file booking
 		Kereta *value;
@@ -261,13 +308,12 @@ void removeFromBookingTrain(int no){
 /* END OF DELETE FILE BOOKING */
 
 /* UPDATE FILE BOOKING */
-void updateFileBookingTrain(int from, int to){
+void updateFileBookingTrain(int from, int to){ // menukar nomor seat dengan yang diingkan
 	readFileBookingTrain();
-	cout << "Masuk Update Booking\n";
+	// cout << "Masuk Update Booking\n";
 	bool isFound = false;
 	Kereta *temp,*node;
 	node = new Kereta;
-	// node->no_penumpang = to;
 
 	temp = trainFirstValue;
 	while(temp -> no_penumpang != from && temp != NULL){

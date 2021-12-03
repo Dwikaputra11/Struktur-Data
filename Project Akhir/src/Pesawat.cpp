@@ -1,9 +1,8 @@
 #include "Pesawat.h"
 
-void createAirPlane(){
-	cout << "Masuk Create Linklist\n";
+void createAirPlane(){ // membuat linklist struct Pesawat
+	// cout << "Masuk Create Linklist\n";
 	// intinya ngasik value awal aja
-    // train = new Pesawat;//(Pesawat*)malloc(sizeof(Pesawat));
 	planeFirstValue = new Pesawat; 
 	planeLastValue = new Pesawat;
 	planeFirstEmpty = new Pesawat;
@@ -14,27 +13,24 @@ void createAirPlane(){
 	planeFirstEmpty = NULL;
 };
 
-void inputAirPlane(string name,int num){ // stack
-	cout << "Masuk Input\n";
-	Pesawat *train;
-	train = new Pesawat;
-	train->nama = name;
-	train->no_penumpang = num;
-	cout << train->nama << " " << train->no_penumpang << endl;
+void inputAirPlane(string name,int num){ // Dimasukan ke File dengan metode Stack;
+	Pesawat *plane;
+	plane = new Pesawat;
+	plane->nama = name;
+	plane->no_penumpang = num;
 
 	if(planeFirstValue == NULL){
-		planeFirstValue = train;
-		planeLastValue = train;
+		planeFirstValue = plane;
+		planeLastValue = plane;
 		planeLastValue->next = NULL;
 	}else{
-		train->next = planeFirstValue;
-		planeFirstValue = train;
+		plane->next = planeFirstValue;
+		planeFirstValue = plane;
 	}
 	countValue++;
 }
-void checkEmptyAirPlane(){
+void checkEmptyAirPlane(){ // Mengecek seat kosong dari pemesanan seat
 	countEmpty = 0;
-	cout << "Masuk Check Empty\n";
     Pesawat *temp,*empty;
 	for(int i = 1; i <= bound; i++){
 		temp = planeFirstValue;
@@ -57,29 +53,89 @@ void checkEmptyAirPlane(){
 		}
 	}
 }
-void displayAirPlane(){
-	// checkEmpty();
-	Pesawat *temp;
-    temp = planeFirstValue;
-	int count = 0;
+void displayAirPlane(){ // Ditampilakn dengan metode queue
+	int count = 1;
     cout << "\nSeat yang telah di booking : \n";
 	cout << "Jumlah Booking : " << countValue << endl;
-    while(temp != NULL && count != 5){
-        cout << "Seat nomor " << temp->no_penumpang << " atas nama " << temp->nama << "\n";
-        temp = temp->next;
-		count++;
+	int x = 4; // jarak enter untuk mengerluarkan "-"
+	int y = 2; // jarak enter untuk mengeluarkan nomor atau karakter
+	int t = 0; // untuk index dalam pengecekan nomor dari player1
+	int a = 0; // untuk index dalam pengecekan nomor dari player2
+	
+	for(int i = 0; i < 25; i++){
+		int p = 9; // jarak spasi untuk memunculkan "|"
+        if(i == x){
+            for(int j = 0; j < 39; j++){
+                if(j >= 18 && j <= 21){
+                    cout << " ";
+                }else{
+                    cout << "-";
+                }
+            }
+            cout << endl;
+            x+=4;
+        }else if(i == y){
+            int r = 5; // jarak spasi untuk memunculkan nomor
+			y = y + 4;
+            for(int j = 1; j < 39; j++ ){
+                if(j == p){
+                    cout << "|";
+                    if(p == 18){
+                        p += 13;
+                    }else{
+                        p += 9;
+                    }
+                }else 
+                if(j == r){
+					Pesawat *tempValue,*tempEmpty;
+					tempEmpty = planeFirstEmpty;
+					tempValue = planeFirstValue;
+					while(tempValue -> no_penumpang != count && tempValue -> next != NULL){
+						tempValue = tempValue->next;
+					}
+                    if(tempValue -> next == NULL && tempValue -> no_penumpang != count){
+						cout << "X";	
+					}else{
+						cout << "O";
+					}
+					count++;
+                    if(r == 14){
+                        r += 13;
+                    }else{
+                        r = r + 9;
+                    }	
+                }else if(j == 22){
+                    cout << "|";
+                }else {
+                    cout << " ";// spasi pada baris yang muncul angka
+                }
+            }
+            cout << endl;
+        }else{
+            int num = 0;
+            for(int j = 1; j < 39; j++ ){
+                // if(j == 27){
+                //     cout << " " << endl;
+                // }
+                if(j == p){
+                    cout << "|";
+                    if(p == 18){
+                        p += 13;
+                    }else{
+                        p = p + 9;
+                    }
+                }else if(j == 22){
+                    cout << "|";
+                }else{
+                    cout << " ";
+                }	
+            }
+            cout << endl;
+        }	
 	}
-
-    cout << "\nSeat Kosong : \n";
-	cout << "Jumlah Seat Kosong : " << countEmpty << endl;
-    temp = planeFirstEmpty;
-    while(temp != NULL){
-        cout << temp->kosong << " ";
-        temp = temp->next;
-    }
 }
 
-bool isBookedAirPlane(int no){
+bool isBookedAirPlane(int no){ // mengecek apakah seat sudah dibooking
 	readFileBookingAirPlane();
 	bool status = false;
 	Pesawat *temp;
@@ -99,16 +155,16 @@ bool isBookedAirPlane(int no){
 /* ============ FILE SECTION ============ */
 
 /* READ & WRITE FILE BOOKING */
-void writeFileBookingAirPlane(string nama[],int pos[],int n){
+void writeFileBookingAirPlane(string nama[],int pos[],int n){ // menulis data ke File
 	createAirPlane();
 	countValue = 0;
 	for(int i = 0; i < n; i++){
-		cout << nama[i] << " " << pos[i] << endl;
+		// cout << nama[i] << " " << pos[i] << endl;
 		inputAirPlane(nama[i],pos[i]);
 	}
 	Pesawat *temp;
 	ofstream myFile;
-	myFile.open(airPlaneBooking,ios::trunc);
+	myFile.open(airPlaneBooking,ios::app);
 	temp = planeFirstValue;
 	while(temp != NULL){
 		myFile << temp->nama << endl;
@@ -118,7 +174,8 @@ void writeFileBookingAirPlane(string nama[],int pos[],int n){
 	myFile.close();
 	writeEmptySeatAirPlane(nama,pos,n);
 }
-void readFileBookingAirPlane(){
+void readFileBookingAirPlane(){ // membaca data dari File
+	countValue = 0;
 	createAirPlane();
 	ifstream myFile;
 	string nama;
@@ -126,37 +183,34 @@ void readFileBookingAirPlane(){
 	myFile.open(airPlaneBooking);
 	if(myFile.is_open()){
 		while(myFile >> nama){
-			Pesawat *train;
-			train = new Pesawat;
-			train->nama = nama;
+			Pesawat *plane;
+			plane = new Pesawat;
+			plane->nama = nama;
 			myFile >> no; 
-			train->no_penumpang = no;
-			// cout << "nama : " << nama << " no : " << no << endl;
+			plane->no_penumpang = no;
 
 			if(planeFirstValue == NULL){
-				// cout << "First Value NULL\n";
-				planeFirstValue = train; 
-				planeLastValue = train;
+				planeFirstValue = plane; 
+				planeLastValue = plane;
 				planeLastValue->next = NULL;
 			}else{
-				planeLastValue->next = train;
-				planeLastValue = train;
+				planeLastValue->next = plane;
+				planeLastValue = plane;
 				planeLastValue->next = NULL;
 			}
+			countValue++;
 			myFile.ignore(numeric_limits<streamsize>::max(),'\n');
 		}
 	}
 	myFile.close();
-	// readEmptySeat();
 }
 /* END OF READ & WRITE FILE BOOKING */
 
 /* READ & WRITE FILE EMPTY SEAT */
-void writeEmptySeatAirPlane(string nama[],int pos[],int n){ // queue
+void writeEmptySeatAirPlane(string nama[],int pos[],int n){ // Ditulis dengan Metode Queue
 	createAirPlane();
 	countValue = 0;
 	for(int i = 0; i < n; i++){
-		cout << nama[i] << " " << pos[i] << endl;
 		inputAirPlane(nama[i],pos[i]);
 	}
 	checkEmptyAirPlane(); 
@@ -170,26 +224,24 @@ void writeEmptySeatAirPlane(string nama[],int pos[],int n){ // queue
 	}
 	myFile.close();
 }
-void readEmptySeatAirPlane(){
-	createAirPlane();
+void readEmptySeatAirPlane(){ // Membaca file seat kosong
+	// createAirPlane();
 	ifstream myFile;
 	int no;
 	myFile.open(airPlaneEmptySeat);
 	if(myFile.is_open()){
 		while(myFile >> no){
-			Pesawat *train;
-			train = new Pesawat;
-			train->kosong = no;
-			// cout << " no : " << no << endl;
+			Pesawat *plane;
+			plane = new Pesawat;
+			plane->kosong = no;
 
 			if(planeFirstEmpty == NULL){
-				// cout << "First Value NULL\n";
-				planeFirstEmpty = train; 
-				planeLastEmpty = train;
+				planeFirstEmpty = plane; 
+				planeLastEmpty = plane;
 				planeLastEmpty->next = NULL;
 			}else{
-				planeLastEmpty->next = train;
-				planeLastEmpty = train;
+				planeLastEmpty->next = plane;
+				planeLastEmpty = plane;
 				planeLastEmpty->next = NULL;
 			}
 			myFile.ignore(numeric_limits<streamsize>::max(),'\n');
@@ -200,11 +252,11 @@ void readEmptySeatAirPlane(){
 /* END OF READ & WRITE FILE EMPTY SEAT */
 
 /* DELETE FILE BOOKING */
-void removeFromBookingAirPlane(int no){
-	readFileBookingAirPlane();
-	cout << "Masuk Remove\n";
+void removeFromBookingAirPlane(int no){ // membatalkan pemesanan
+	readFileBookingAirPlane(); // membaca file dimasukkan ke linklist
+	// cout << "Masuk Remove\n";
 	bool isBook = true;
-	cout << "isBook " << isBook << endl;
+	// cout << "isBook " << isBook << endl;
 	Pesawat *hapus,*temp;
 	hapus = new Pesawat;
 	if(planeFirstValue->no_penumpang == no){
@@ -230,7 +282,7 @@ void removeFromBookingAirPlane(int no){
 
 	if(isBook){
 		countValue--; 
-		cout << "\nADA\n";
+		// cout << "\nADA\n";
 		free(hapus);
 		// update file booking
 		Pesawat *value;
@@ -261,9 +313,9 @@ void removeFromBookingAirPlane(int no){
 /* END OF DELETE FILE BOOKING */
 
 /* UPDATE FILE BOOKING */
-void updateFileBookingAirPlane(int from, int to){
+void updateFileBookingAirPlane(int from, int to){ // menukar nomor seat dengan yang diingkan
 	readFileBookingAirPlane();
-	cout << "Masuk Update Booking\n";
+	// cout << "Masuk Update Booking\n";
 	bool isFound = false;
 	Pesawat *temp,*node;
 	node = new Pesawat;
