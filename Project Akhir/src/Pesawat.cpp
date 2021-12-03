@@ -133,6 +133,9 @@ void displayAirPlane(){ // Ditampilakn dengan metode queue
             cout << endl;
         }	
 	}
+	cout << "\n\nKeterangan\n";
+	cout << "O : Telah dibooking\n";
+	cout << "X : Belum dibooking\n";
 }
 
 bool isBookedAirPlane(int no){ // mengecek apakah seat sudah dibooking
